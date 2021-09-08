@@ -1,6 +1,6 @@
 # 2021-09-04 Meeting
 
-[99 Bottles of Beer](/archive/99bottles_beer_ruby.pdf), Ch.4
+99 Bottles of Beer, Ch.4
 
 ### Chapter 4. Practicing Horizontal Refactoring
 

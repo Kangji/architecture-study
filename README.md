@@ -2,8 +2,8 @@
 
 ## Roadmap
 
-  - [The Practice of Programming](./archive/The_practice_of_programming.pdf) :white_check_mark:
-  - [99 Bottles of Beer](./archive/99bottles_beer_ruby.pdf) :arrow_backward:
+  - The Practice of Programming :white_check_mark:
+  - 99 Bottles of Beer :arrow_backward:
 
 ## Member
 
