@@ -1,0 +1,57 @@
+### Chapter 5. Separating Responsibilities
+
+- six-pack requirements 에 대해서 아직 open 되어있지 않음. 만약 이 문제를 해결하지 못한다면, shameless green 에 남아있는게 오히려 더 좋았음.
+- 5.1. Selecting The Target Code Smell
+    - refactoring 이 항상 성공하는 것은 아니다. shameless green 을 생각해보면 오히려 코드 수정이 쉬웠음.
+    - proper refactoring 에 성공하면 그 코드는 훨씬 더 쉽게 수정되고 다시 revert 될 수 있어야 한다.
+    - 지금 코드에 additional modification 을 추가하거나, 아니면 기존 수정을 revert 하고 다시 different track 에 올라타거나.
+    - code smell 을 탐지하고 이를 기반으로 리팩토링을 시작하자.
+- 5.1.1. Identifying Patterns in Code
+- 5.1.2. Spotting Common Qualities
+    - Do any methods have the same shape?
+        - 일부러 same shape 를 유지하도록 해줌
+        - squint test
+    - Do any methods take an argument of the same name?
+        - There are many methods that take an argument `number`
+    - Do arguments of the same name always mean the same thing?
+        - container(number) 와 container(successor(number)) 의 두 가지 케이스가 있다, 따라서 여기서는 같은 argument 가 다른 의미를 가지기도 함.
+            - number 가 bottle number 랑 verse number 가 되기도.
+        - Having multiple methods that take the same argument is a code smell.
+- 5.1.3. Enumerating Flocked Method Commonalities
+    - Do the tests in the conditionals have anything in common?
+        - Yes.
+        - Having tests that pass doesn't guarantee the best expression of code, and this is a case where your choice of operator affects future costs.
+        - Testing for "equality" makes the code more precise, and this precision, enables future refactorings.
+- 5.1.4. Insisting Upon Messages
+    - Object-oriented mindset!
+    - In current code, some functions rely more on the arguments, not on the classes.
+    - As an OO practitioner, when you see a conditional, the hairs on your neck should stand up.
+    - 완벽하게는 이해가 안감. 어떻게 하라는걸까.
+- 5.2. Extracting Classes
+    - Primitive Obsession → when you use one of these data classes to represent a concept in your domain.
+- 5.2.1. Modeling Abstractions
+    - Concepts into the classes!
+    - Number is not the real thing, but it has a concept.
+- 5.2.2. Naming Classes
+    - BottleNumber vs ContainerNumber
+    - BottleNumber is less flexible but more straightforward, however ContainerNumber is more flexible and general.
+    - There are no obvious rules. Names are amenable.
+- 5.2.3. Extracting BottleNumber
+    - BottleNumber 라는 class 를 만들고, 여기에 필요한 함수들을 정의.
+    - 일단 Bottles 를 그대로 베낀 다음, TDD 방식으로 진행.
+- 5.2.4. Removing Arguments
+    - Bottles 와 BottleNumber 에서 겹치는 부분들을 제거해나감.
+    - 여기서 예시를 든 방식에서는 multi-line change 이고 쉬운 케이스지만 real-world application 에서는 안 그럴수도 있음.
+- 5.2.5. Trusting The Process
+    - Refactoring 하다가 막힐 때가 있는데 그냥 뚝심있게 해라.
+- 5.3. Appreciating Immutability
+    - Immutability 라는 점을 사용하면 easy to debug & understand 하다는 강점이 있음.
+    - 하지만 때로는 cost ineffective.
+- 5.4. Assuming Fast Enough
+    - 일단 immutability 를 도입할 때는 fast enough 하다고 assume 하고 진행.
+    - caching 이라는 방식으로 더 효과적으로 할 수 있다.
+- 5.5. Creating BottleNumbers
+- 5.6. Recognizing Liskov Violations
+    - successor 라는 예시가 나옴.
+    - 원래 successor 는 integer 를 return 하는 함수, 근데 이 문제 상황에서는 BottleNumber 를 return 하게 바꿔주고 싶음.
+    - 여기서는 일단 Liskov Violation 을 일으키지 않기 위해 원래대로 integer 를 return 하도록 내비둠.
