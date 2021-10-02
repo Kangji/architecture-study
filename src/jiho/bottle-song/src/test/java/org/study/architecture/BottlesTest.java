@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BottlesTest {
     private final static String VERSE_0 =
         "No more bottles of beer on the wall, " +
-            "no more bottles of beer\n" +
+            "no more bottles of beer.\n" +
             "Go to the store and buy some more, " +
             "99 bottles of beer on the wall.\n";
 
