@@ -1,8 +1,11 @@
 package org.study.architecture;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -42,24 +45,31 @@ public class BottlesTest {
             "%d bottles of beer on the wall, " +
                 "%d bottles of beer.\n" +
                 "Take one down and pass it around, " +
-                "%d bottle of beer on the wall.\n",
+                "%d bottles of beer on the wall.\n",
             n, n, n - 1);
     }
 
     @ParameterizedTest
     @ValueSource(ints = {3, 5, 13, 19, 23, 29, 87, 99})
-    public void testVerseFrom3To99(int number) {
+    public void testNormalVerse(int number) {
         Bottles bottles = new Bottles();
         assertEquals(getVerse(number), bottles.verse(number));
     }
 
-    @Test
-    public void testSpecialVerse() {
+    @ParameterizedTest
+    @MethodSource("verseAndBottle")
+    public void testSpecialVerse(String expected, String obtained) {
+        assertEquals(expected, obtained);
+    }
+
+    private static Stream<Arguments> verseAndBottle() {
         Bottles bottles = new Bottles();
-        assertEquals(VERSE_0, bottles.verse(0));
-        assertEquals(VERSE_1, bottles.verse(1));
-        assertEquals(VERSE_2, bottles.verse(2));
-        assertEquals(VERSE_6, bottles.verse(6));
-        assertEquals(VERSE_7, bottles.verse(7));
+        return Stream.of(
+            Arguments.of(VERSE_0, bottles.verse(0)),
+            Arguments.of(VERSE_1, bottles.verse(1)),
+            Arguments.of(VERSE_2, bottles.verse(2)),
+            Arguments.of(VERSE_6, bottles.verse(6)),
+            Arguments.of(VERSE_7, bottles.verse(7))
+        );
     }
 }
